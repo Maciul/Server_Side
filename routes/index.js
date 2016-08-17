@@ -10,11 +10,12 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.get('/weather', function(request, response, next) {
+router.get('/weather', function(req, res, next) {
   request("http://api.aerisapi.com/forecasts/80211?client_id=" +
-  process.env.CLIENT_ID + "&client_secret=" + process.env.CLIENT_SECRET, function(err, response, body) {
+  process.env.CLIENT_ID + "&client_secret=" + process.env.CLIENT_SECRET, function(error, response, body) {
     if (!error && response.statusCode == 200) {
-      console.log(body);
+      var parsed = JSON.parse(body)
+      res.json(parsed)
     }
   });
 });
