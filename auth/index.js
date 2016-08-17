@@ -27,11 +27,14 @@ router.post('/signup', function(request, response) {
 router.post('/login', function(request, response, next) {
   db.findUserByUsername(request.query.username)
   .then(function(user) {
+    // console.log(user)
       var plainTextPassword = request.query.password;
       if (user && bcrypt.compareSync(plainTextPassword, user.password) ) {
+        // console.log(user)
         delete user.password;
 
         jwt.sign(user, process.env.TOKEN_SECRET, {expiresIn: '1d'}, function(err, token) {
+          console.log(user)
           console.log(token);
           if (err) {
             response.json({
