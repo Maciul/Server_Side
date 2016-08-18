@@ -32,10 +32,7 @@ router.post('/login', function(request, response, next) {
       if (user && bcrypt.compareSync(plainTextPassword, user.password) ) {
         // console.log(user)
         delete user.password;
-
         jwt.sign(user, process.env.TOKEN_SECRET, {expiresIn: '1d'}, function(err, token) {
-          console.log(user)
-          console.log(token);
           if (err) {
             response.json({
               message: 'Error creating token'
@@ -43,7 +40,10 @@ router.post('/login', function(request, response, next) {
           } else {
             response.json({
               token: token,
-              userId: user.id
+              userId: user.id,
+              username: user.username,
+              zip: user.zip,
+              phone: user.phone
             });
           }
         });

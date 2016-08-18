@@ -11,11 +11,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/weather', function(req, res, next) {
-  request("http://api.aerisapi.com/forecasts/80211?client_id=" +
+  request("http://api.aerisapi.com/forecasts/" + req.query.zip + "?client_id=" +
   process.env.CLIENT_ID + "&client_secret=" + process.env.CLIENT_SECRET, function(error, response, body) {
     if (!error && response.statusCode == 200) {
-      var parsed = JSON.parse(body)
-      res.json(parsed)
+      var parsed = JSON.parse(body);
+      res.json(parsed);
     }
   });
 });
